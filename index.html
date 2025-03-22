@@ -73,6 +73,15 @@
             <h2>Calculate Your Website's Carbon Footprint</h2>
             <div class="calculator-container">
                 <form id="calculator-form">
+                    <div class="form-group url-input-group">
+                        <label for="website-url">Website URL:</label>
+                        <div class="url-input-wrapper">
+                            <input type="url" id="website-url" name="website-url" placeholder="https://example.com" required>
+                            <button type="button" id="analyze-button" class="analyze-btn">Analyze Website</button>
+                        </div>
+                        <div id="analysis-status" class="status-message"></div>
+                    </div>
+                    
                     <div class="form-group">
                         <label for="page-size">Page Size (KB):</label>
                         <input type="number" id="page-size" name="page-size" min="0" step="1" value="2000" required>

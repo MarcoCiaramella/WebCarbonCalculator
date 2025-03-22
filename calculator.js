@@ -8,6 +8,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     const calculatorForm = document.getElementById('calculator-form');
     const resultsSection = document.getElementById('results');
+    const websiteUrlInput = document.getElementById('website-url');
+    const analyzeButton = document.getElementById('analyze-button');
+    const analysisStatus = document.getElementById('analysis-status');
     
     // Energy consumption factors (kWh per GB)
     const ENERGY_FACTORS = {
@@ -39,10 +42,104 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
+    // Add event listener for the analyze button
+    analyzeButton.addEventListener('click', function() {
+        const url = websiteUrlInput.value.trim();
+        if (url) {
+            analyzeWebsite(url);
+        } else {
+            analysisStatus.textContent = 'Please enter a valid URL';
+            analysisStatus.className = 'status-message error';
+        }
+    });
+    
     calculatorForm.addEventListener('submit', function(e) {
         e.preventDefault();
         calculateFootprint();
     });
+    
+    async function analyzeWebsite(url) {
+        // Update status
+        analysisStatus.textContent = 'Analyzing website...';
+        analysisStatus.className = 'status-message loading';
+        
+        try {
+            // Use a CORS proxy to avoid cross-origin issues
+            const corsProxy = 'https://api.allorigins.win/raw?url=';
+            const response = await fetch(corsProxy + encodeURIComponent(url));
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch website data');
+            }
+            
+            // Get response text
+            const htmlContent = await response.text();
+            
+            // Calculate page size (html content length in KB)
+            const baseHtmlSize = htmlContent.length / 1024;
+            
+            // Parse HTML to find and count external resources
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlContent, 'text/html');
+            
+            // Get all resources (CSS, JS, images, etc.)
+            const cssLinks = Array.from(doc.querySelectorAll('link[rel="stylesheet"]')).length;
+            const scripts = Array.from(doc.querySelectorAll('script[src]')).length;
+            const images = Array.from(doc.querySelectorAll('img')).length;
+            
+            // Estimate total size based on typical resource sizes
+            // These are rough estimates as we can't directly measure the file sizes
+            const estimatedCssSize = cssLinks * 50; // ~50KB per CSS file
+            const estimatedJsSize = scripts * 120; // ~120KB per JS file
+            const estimatedImgSize = images * 200; // ~200KB per image
+            
+            // Calculate total estimated size
+            const totalEstimatedSize = baseHtmlSize + estimatedCssSize + estimatedJsSize + estimatedImgSize;
+            
+            // Update the page size input
+            document.getElementById('page-size').value = Math.round(totalEstimatedSize);
+            
+            // Try to detect server location based on response headers or domain TLD
+            // This is a simplified approach and not always accurate
+            let serverLocation = 'north-america'; // Default
+            const domain = new URL(url).hostname;
+            
+            if (domain.endsWith('.eu') || domain.endsWith('.de') || domain.endsWith('.fr') || 
+                domain.endsWith('.uk') || domain.endsWith('.it') || domain.endsWith('.es')) {
+                serverLocation = 'europe';
+            } else if (domain.endsWith('.cn') || domain.endsWith('.jp') || domain.endsWith('.kr') || 
+                      domain.endsWith('.in') || domain.endsWith('.sg') || domain.endsWith('.th')) {
+                serverLocation = 'asia';
+            } else if (domain.endsWith('.au') || domain.endsWith('.nz')) {
+                serverLocation = 'oceania';
+            } else if (domain.endsWith('.br') || domain.endsWith('.ar') || domain.endsWith('.mx')) {
+                serverLocation = 'south-america';
+            } else if (domain.endsWith('.za') || domain.endsWith('.ng') || domain.endsWith('.eg')) {
+                serverLocation = 'africa';
+            }
+            
+            // Set the server location dropdown
+            document.getElementById('server-location').value = serverLocation;
+            
+            // Set a reasonable default for monthly visitors if the field is empty
+            if (document.getElementById('monthly-visitors').value === "0") {
+                document.getElementById('monthly-visitors').value = "10000";
+            }
+            
+            // Update status
+            analysisStatus.textContent = 'Analysis complete! Estimated page size: ' + 
+                                         Math.round(totalEstimatedSize) + ' KB';
+            analysisStatus.className = 'status-message success';
+            
+            // Calculate footprint with the new values
+            calculateFootprint();
+            
+        } catch (error) {
+            console.error('Error analyzing website:', error);
+            analysisStatus.textContent = 'Error analyzing website. Some sites may block access due to CORS restrictions.';
+            analysisStatus.className = 'status-message error';
+        }
+    }
     
     function calculateFootprint() {
         // Get form values

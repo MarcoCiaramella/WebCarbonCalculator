@@ -151,6 +151,50 @@ input:focus, select:focus {
     background-color: var(--primary-dark);
 }
 
+/* URL Input and Analysis Button */
+.url-input-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.url-input-wrapper input {
+    flex-grow: 1;
+}
+
+.analyze-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.analyze-btn:hover {
+    background-color: #37474f;
+}
+
+.status-message {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.loading {
+    color: #2196F3;
+}
+
+.error {
+    color: #f44336;
+}
+
+.success {
+    color: var(--primary-color);
+}
+
 /* Results Styles */
 .results {
     margin-top: 2rem;
@@ -306,6 +350,15 @@ footer a:hover {
     
     .results-grid {
         grid-template-columns: 1fr;
+    }
+
+    .url-input-wrapper {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .analyze-btn {
+        width: 100%;
     }
 }
 

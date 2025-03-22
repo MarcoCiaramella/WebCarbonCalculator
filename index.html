@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Web Design Calculator | Reduce Your Website's Carbon Footprint</title>
+    <meta name="description" content="Calculate your website's carbon footprint and get actionable recommendations to create more environmentally friendly web designs. Free sustainability tool for web developers and designers.">
+    <meta name="keywords" content="sustainable web design, carbon footprint calculator, eco-friendly website, green web development, website sustainability, carbon emissions calculator, sustainable UX, website optimization">
+    <meta name="author" content="Your Name">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Sustainable Web Design Calculator | Reduce Website Carbon Footprint">
+    <meta property="og:description" content="Calculate your website's environmental impact and get actionable sustainability recommendations for free.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/sustainable-web-calculator">
+    <meta property="og:image" content="https://yourdomain.com/images/sustainable-calculator-preview.jpg">
+    
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sustainable Web Design Calculator">
+    <meta name="twitter:description" content="Calculate your website's carbon footprint and improve sustainability.">
+    <meta name="twitter:image" content="https://yourdomain.com/images/sustainable-calculator-preview.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Structured Data / Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Sustainable Web Design Calculator",
+      "url": "https://yourdomain.com/sustainable-web-calculator",
+      "description": "A free calculator to measure website carbon footprint and improve web sustainability",
+      "applicationCategory": "Web Development Tool",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Person",
+        "name": "Your Name"
+      }
+    }
+    </script>
+    
+    <!-- Preconnect to required origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Sustainable Web Design Calculator</h1>
+            <p class="tagline">Measure and reduce your website's environmental impact</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="intro">
+            <h2>Why Website Sustainability Matters</h2>
+            <p>The internet produces approximately 3.7% of global carbon emissions — similar to the airline industry. A sustainable website not only helps the environment but also improves user experience, loads faster, and ranks better in search results.</p>
+        </section>
+
+        <section class="calculator-section">
+            <h2>Calculate Your Website's Carbon Footprint</h2>
+            <div class="calculator-container">
+                <form id="calculator-form">
+                    <div class="form-group">
+                        <label for="page-size">Page Size (KB):</label>
+                        <input type="number" id="page-size" name="page-size" min="0" step="1" value="2000" required>
+                        <span class="helper-text">Average webpage is about 2,000 KB (2 MB)</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="monthly-visitors">Monthly Visitors:</label>
+                        <input type="number" id="monthly-visitors" name="monthly-visitors" min="0" step="1" value="10000" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pages-per-visit">Pages Per Visit:</label>
+                        <input type="number" id="pages-per-visit" name="pages-per-visit" min="0" step="0.1" value="3" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="hosting-type">Hosting Type:</label>
+                        <select id="hosting-type" name="hosting-type">
+                            <option value="standard">Standard (Non-Green)</option>
+                            <option value="green">Green/Renewable Energy</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="server-location">Server Location:</label>
+                        <select id="server-location" name="server-location">
+                            <option value="north-america">North America</option>
+                            <option value="europe">Europe</option>
+                            <option value="asia">Asia</option>
+                            <option value="oceania">Oceania</option>
+                            <option value="south-america">South America</option>
+                            <option value="africa">Africa</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="calculate-btn">Calculate Carbon Footprint</button>
+                </form>
+                
+                <div id="results" class="results hidden">
+                    <h3>Carbon Footprint Results</h3>
+                    <div class="results-grid">
+                        <div class="result-card">
+                            <h4>Monthly CO₂ Emissions</h4>
+                            <p id="monthly-co2" class="result-value">0 kg</p>
+                        </div>
+                        <div class="result-card">
+                            <h4>Annual CO₂ Emissions</h4>
+                            <p id="annual-co2" class="result-value">0 kg</p>
+                        </div>
+                        <div class="result-card">
+                            <h4>Equivalent to</h4>
+                            <p id="co2-equivalent" class="result-value">0 trees needed to offset</p>
+                        </div>
+                        <div class="result-card">
+                            <h4>Performance Rating</h4>
+                            <p id="performance-rating" class="result-value">N/A</p>
+                        </div>
+                    </div>
+                    
+                    <div id="recommendations" class="recommendations">
+                        <h3>Recommendations to Improve</h3>
+                        <ul id="recommendation-list">
+                            <!-- Recommendations will be added here dynamically -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="explanation">
+            <h2>How the Sustainable Web Calculator Works</h2>
+            <p>Our calculator estimates carbon emissions based on page size, visitor traffic, and server energy sources. Using data from peer-reviewed research on digital carbon footprints, we calculate:</p>
+            <ul>
+                <li><strong>Energy consumption</strong> of data transfer and server processing</li>
+                <li><strong>Carbon intensity</strong> based on hosting location and energy type</li>
+                <li><strong>Total emissions</strong> across your website's user base</li>
+                <li><strong>Practical recommendations</strong> for reducing your site's environmental impact</li>
+            </ul>
+            <p>Data is processed locally in your browser — no information is collected or stored on our servers.</p>
+        </section>
+        
+        <section class="sustainability-tips">
+            <h2>Sustainable Web Design Best Practices</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h3>Optimize Images</h3>
+                    <p>Compress images, use modern formats like WebP, and implement lazy loading to reduce data transfer.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>Minimize JavaScript</h3>
+                    <p>Use code splitting, tree shaking, and only load essential scripts to reduce processing energy.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>Green Hosting</h3>
+                    <p>Choose hosting providers powered by renewable energy to dramatically reduce carbon footprint.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>Efficient Caching</h3>
+                    <p>Implement browser and server caching to reduce redundant data transfers and server loads.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>Reduce Font Weight</h3>
+                    <p>Use system fonts or subset custom fonts to include only necessary characters.</p>
+                </div>
+                <div class="tip-card">
+                    <h3>Optimize for Mobile</h3>
+                    <p>Mobile-first design typically results in lighter pages and more energy-efficient browsing.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="faq">
+            <h2>Frequently Asked Questions</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button class="accordion-header">How accurate is this calculator?</button>
+                    <div class="accordion-content">
+                        <p>This calculator provides estimates based on current research on digital carbon emissions. While it can't account for every variable, it uses peer-reviewed methodologies to give you a reasonable approximation and actionable insights.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">Does a sustainable website affect SEO?</button>
+                    <div class="accordion-content">
+                        <p>Yes! Many sustainability optimizations (smaller page size, faster loading, better mobile experience) directly improve SEO performance. Google's Core Web Vitals and page experience signals favor efficient websites.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">What's the biggest factor in website carbon footprint?</button>
+                    <div class="accordion-content">
+                        <p>Page weight (total KB downloaded) typically has the largest impact, followed by the energy source of your hosting provider. Reducing page size through optimization can significantly decrease carbon emissions.</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <button class="accordion-header">How can I find green hosting providers?</button>
+                    <div class="accordion-content">
+                        <p>Look for hosting companies that use 100% renewable energy or purchase Renewable Energy Certificates (RECs). The Green Web Foundation maintains a directory of verified green hosting providers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year">2025</span> Your Name/Company. All rights reserved.</p>
+            <p>A free tool to promote sustainable web practices and reduce digital carbon footprints.</p>
+            <p><a href="/about">About</a> | <a href="/privacy">Privacy Policy</a> | <a href="/contact">Contact</a></p>
+        </div>
+    </footer>
+
+    <script src="calculator.js"></script>
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Initialize accordion functionality
+        document.querySelectorAll('.accordion-header').forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.toggle('active');
+                const content = button.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
